@@ -1,22 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { TrendingDown } from "lucide-react";
+import { Clock } from "lucide-react";
 
-interface SpeedAccuracyChartProps {
+interface TimeBasedChartProps {
   data: Array<{
     responseTime: number;
-    score: number;
+    timeBasedScore: number;
     question: number;
   }>;
 }
 
-export const SpeedAccuracyChart = ({ data }: SpeedAccuracyChartProps) => {
+export const TimeBasedChart = ({ data }: TimeBasedChartProps) => {
   return (
     <Card className="h-full bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20 shadow-lg">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-primary flex items-center gap-2">
-          <TrendingDown className="h-5 w-5" />
-          Speed vs. Accuracy
+          <Clock className="h-5 w-5" />
+          Time-Based Scoring
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -39,22 +39,22 @@ export const SpeedAccuracyChart = ({ data }: SpeedAccuracyChartProps) => {
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px'
                 }}
-                formatter={(value, name) => [value, name === 'score' ? 'Score' : name]}
+                formatter={(value, name) => [value, name === 'timeBasedScore' ? 'Time Score' : name]}
                 labelFormatter={(label) => `Response Time: ${label}s`}
               />
               <Line 
                 type="monotone" 
-                dataKey="score" 
-                stroke="hsl(var(--primary))" 
+                dataKey="timeBasedScore" 
+                stroke="hsl(var(--accent))" 
                 strokeWidth={3}
-                dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, stroke: 'hsl(var(--primary))', strokeWidth: 2 }}
+                dot={{ fill: 'hsl(var(--accent))', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, stroke: 'hsl(var(--accent))', strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
         <div className="mt-4 text-sm text-muted-foreground text-center">
-          Trend shows the relationship between response speed and accuracy
+          Score decreases as response time increases (10pts &lt;2s, 8pts 2-4s, 6pts 4-6s, etc.)
         </div>
       </CardContent>
     </Card>

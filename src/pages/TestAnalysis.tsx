@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScoreCard } from "@/components/ScoreCard";
-import { SpeedAccuracyChart } from "@/components/SpeedAccuracyChart";
+import { TimeBasedChart } from "@/components/TimeBasedChart";
+import { AttemptBasedChart } from "@/components/AttemptBasedChart";
 import { DetailedBreakdown } from "@/components/DetailedBreakdown";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Brain } from "lucide-react";
@@ -12,17 +13,29 @@ const mockData = {
   totalQuestions: 10,
   correctAnswers: 8,
   incorrectAnswers: 2,
-  speedAccuracyData: [
-    { responseTime: 2.1, score: 10, question: 1 },
-    { responseTime: 3.5, score: 8, question: 2 },
-    { responseTime: 1.8, score: 10, question: 3 },
-    { responseTime: 4.2, score: 6, question: 4 },
-    { responseTime: 2.9, score: 10, question: 5 },
-    { responseTime: 5.1, score: 4, question: 6 },
-    { responseTime: 2.3, score: 10, question: 7 },
-    { responseTime: 3.8, score: 8, question: 8 },
-    { responseTime: 1.9, score: 10, question: 9 },
-    { responseTime: 4.5, score: 5, question: 10 },
+  timeBasedData: [
+    { responseTime: 2.1, timeBasedScore: 10, question: 1 },
+    { responseTime: 3.5, timeBasedScore: 8, question: 2 },
+    { responseTime: 1.8, timeBasedScore: 10, question: 3 },
+    { responseTime: 4.2, timeBasedScore: 6, question: 4 },
+    { responseTime: 2.9, timeBasedScore: 8, question: 5 },
+    { responseTime: 5.1, timeBasedScore: 4, question: 6 },
+    { responseTime: 2.3, timeBasedScore: 10, question: 7 },
+    { responseTime: 3.8, timeBasedScore: 8, question: 8 },
+    { responseTime: 1.9, timeBasedScore: 10, question: 9 },
+    { responseTime: 4.5, timeBasedScore: 6, question: 10 },
+  ],
+  attemptBasedData: [
+    { question: 1, attempts: 1, attemptScore: 10 },
+    { question: 2, attempts: 2, attemptScore: 7 },
+    { question: 3, attempts: 1, attemptScore: 10 },
+    { question: 4, attempts: 3, attemptScore: 4 },
+    { question: 5, attempts: 1, attemptScore: 10 },
+    { question: 6, attempts: 3, attemptScore: 4 },
+    { question: 7, attempts: 1, attemptScore: 10 },
+    { question: 8, attempts: 2, attemptScore: 7 },
+    { question: 9, attempts: 1, attemptScore: 10 },
+    { question: 10, attempts: 1, attemptScore: 10 },
   ],
   questions: [
     {
@@ -159,15 +172,20 @@ const TestAnalysis = () => {
           </Card>
         ) : (
           <div className="space-y-8">
-            {/* Score and Chart Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Score Card */}
+            <div className="grid grid-cols-1 gap-8">
               <ScoreCard
                 score={mockData.score}
                 totalQuestions={mockData.totalQuestions}
                 correctAnswers={mockData.correctAnswers}
                 incorrectAnswers={mockData.incorrectAnswers}
               />
-              <SpeedAccuracyChart data={mockData.speedAccuracyData} />
+            </div>
+
+            {/* Chart Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <TimeBasedChart data={mockData.timeBasedData} />
+              <AttemptBasedChart data={mockData.attemptBasedData} />
             </div>
 
             {/* Detailed Breakdown */}
